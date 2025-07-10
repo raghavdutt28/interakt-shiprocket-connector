@@ -3,6 +3,7 @@
   "version": "3.0.0",
   "description": "Instant WhatsApp nudge for Shiprocket‑Fastrr abandoned carts via Interakt API campaign (campaign → abandoned_30)",
   "main": "app.js",
+  "type": "module",
   "scripts": { "start": "node index.js" },
   "dependencies": {
     "dotenv": "^16.4.5",

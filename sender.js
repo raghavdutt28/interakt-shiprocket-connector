@@ -1,6 +1,6 @@
-const fetch = require('node-fetch');
-const pLimit = require('p-limit');
-const { getCampaignId } = require('./campaign');
+import fetch  from 'node-fetch';
+import pLimit from 'p-limit';
+import { getCampaignId } from './campaign.js';
 
 const API_URL    = 'https://api.interakt.ai/v1/public/message/';
 const AUTH_HEADER = 'Basic ' + process.env.INTERAKT_API_KEY;
@@ -20,7 +20,7 @@ async function sendWhatsApp(evt) {
       languageCode: process.env.INTERAKT_LANGUAGE,
       headerValues: [evt.headerImageUrl],
       bodyValues: [evt.name, evt.productName, evt.discount, evt.finalPrice],
-      buttonValues: { '0': [evt.cartUrl] }  // button 1 (MYCART) static in template
+      buttonValues: { '0': ["MYCART"],"1": [evt.cartUrl] }  
     }
   };
 
@@ -32,4 +32,4 @@ async function sendWhatsApp(evt) {
   if (!res.ok) throw new Error(`Interakt ${res.status}: ${await res.text()}`);
 }
 
-module.exports.enqueueSend = (evt) => limiter(() => sendWhatsApp(evt));
+export const enqueueSend = (evt) => limiter(() => sendWhatsApp(evt));

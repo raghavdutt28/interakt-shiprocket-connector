@@ -1,18 +1,20 @@
-const fs   = require('fs');
-const fetch = require('node-fetch');
+import fs from 'fs';
+import fetch from 'node-fetch';
 
 const ID_FILE = 'campaign-id.txt';
-const AUTH_HEADER = 'Basic ' + process.env.INTERAKT_API_KEY;
+const AUTH_HEADER = 'Basic '+ process.env.INTERAKT_API_KEY;
 const ROOT = 'https://api.interakt.ai/v1/public';
 
-// Hard‑coded campaign name
+
 async function createCampaign() {
   const body = {
-    campaign_name: 'abandoned_30',   // ← fixed name
+    campaign_name: 'abandoned_30',   
     campaign_type: 'PublicAPI',
     template_name: process.env.INTERAKT_TEMPLATE_NAME,
     language_code: process.env.INTERAKT_LANGUAGE || 'en'
   };
+  console.log('Sending create-campaign payload:', body);
+
 
   const res = await fetch(`${ROOT}/create-campaign/`, {
     method: 'POST',
@@ -30,7 +32,7 @@ async function createCampaign() {
   return data.campaign_id;
 }
 
-module.exports.getCampaignId = async () => {
+export const getCampaignId = async () => {
   if (fs.existsSync(ID_FILE)) return fs.readFileSync(ID_FILE, 'utf8').trim();
   return await createCampaign();
 };

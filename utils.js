@@ -1,4 +1,4 @@
-exports.extractPayload = (body) => {
+export const extractPayload = (body) => {
   const phone = String(body.customerPhone || '').replace(/\D/g, '');
   const name  = (body.customerName || 'Customer').trim();
 
